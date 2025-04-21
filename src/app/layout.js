@@ -1,5 +1,10 @@
+import React from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { NextAppProvider } from '@toolpad/core/nextjs';
+import LinearProgress from '@mui/material/LinearProgress';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +27,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AppRouterCacheProvider options={{ key: 'css' }}>
+        <React.Suspense fallback={<LinearProgress />}>
+        <NextAppProvider>
+            {children}
+            </NextAppProvider>
+            </React.Suspense>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

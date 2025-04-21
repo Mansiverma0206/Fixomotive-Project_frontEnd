@@ -1,0 +1,77 @@
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
+const ModulePage = async () => {
+  const response = await fetch("http://localhost:4008/moduledata/");
+  const moduleData = await response.json()
+  return (
+    <FormControl sx={{ m: 3, minWidth: 120 }}>
+      <InputLabel id="demo-select-small-label">MODULE</InputLabel>
+      <Select
+        labelId="demo-select-small-label"
+        id="demo-select-small"
+        label="MODULE"
+        value=""
+      >{
+
+        moduleData.data.map((data) => {
+            return (
+              <MenuItem key={data.id} value={data.id}>
+                {data.name}
+              </MenuItem>
+            )
+          })
+        }
+      </Select>
+    </FormControl>
+  )
+}
+
+export default ModulePage;
+
+
+
+import Link from 'next/link';
+import { AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
+
+const pages = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Services', path: '/services' },
+];
+
+export default function DashBoardPage() {
+  return (
+    <AppBar position="static" sx={{ backgroundColor: '#0D47A1' }}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+          <Typography variant="h6" sx={{ color: 'white', fontWeight: 'bold' }}>
+            Fixomotive
+          </Typography>
+          {pages.map((page) => (
+            <Link key={page.name} href={page.path} passHref>
+              <Button sx={{ color: 'white', textTransform: 'none' }}>
+                {page.name}
+              </Button>
+            </Link>
+          ))}
+        </Box>
+
+        <Link href="/login" passHref>
+          <Button
+            variant="outlined"
+            sx={{
+              color: 'white',
+              borderColor: 'white',
+              textTransform: 'none',
+            }}
+          >
+            Login
+          </Button>
+        </Link>
+      </Toolbar>
+    </AppBar>
+  );
+}
