@@ -16,9 +16,10 @@ const allData = {
 const columns = [
     { field: 'id', headerName: 'ID', width: 200, headerAlign: 'center', align: 'center'},
     { field: 'subSubCategory', headerName: 'Sub-Sub-Category Name', width: 200, headerAlign: 'center', align: 'center'},
-    { field : 'link' , headerName : 'Link',width:200,headerAlign : 'center',align:'center' , renderCell : ()=>
+    { field : 'link' , headerName : 'Link',width:200,headerAlign : 'center',align:'center' , 
+      renderCell : (params)=>
     (
-      <Link  style={{ color: 'blue', textDecoration: 'underline' }}>View Manul</Link>
+      <Link  href={`/category/subCategory/subSubCate/manul?subSubCateId=${params.row.subSubCategory}`} style={{ color: 'blue', textDecoration: 'underline' }}>View Manul</Link>
     )
     },
      { field: 'edit', headerName: 'Edit', width: 200, headerAlign: 'center', align: 'center', renderCell: () => <EditIcon style={{ cursor: 'pointer' }} /> },

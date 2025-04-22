@@ -26,7 +26,6 @@ const columns = [
   { field: 'delete', headerName: 'Delete', width: 200, headerAlign: 'center', align: 'center', renderCell: () => <DeleteIcon style={{ cursor: 'pointer' }} /> },
 ]
 
-
 const paginationModel = { page: 0, pageSize: 5 };
 
 const SubCategory = () => {
@@ -37,12 +36,6 @@ const SubCategory = () => {
   if (!allData[oem]) {
     return <p style={{ textAlign: 'center' }}>No subcategory data found for "{oem}"</p>;
   }
-
-
-  // const rows = (allData[oem] || []).map((sub,index)=>({
-  //   id:index + 1,
-  //   subCategory : sub
-  // }))
 
   const rows = allData[oem].map((sub, index) => ({
     id: `${index + 1}`,

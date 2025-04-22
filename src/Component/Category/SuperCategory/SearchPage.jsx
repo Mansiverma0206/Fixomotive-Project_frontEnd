@@ -11,20 +11,29 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import SearchIcon from '@mui/icons-material/Search';
 import OemCategory from './page';
-import OemSelect from '../car/OemSelect';
 import Link from 'next/link';
-import UserPage from '@/app/user/page';
+
+import  { useState } from 'react' ;
 
 export default function FormDialog() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [categories , setCategories] = useState([]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    const handleClickOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const newCategory = formData.get('oemCategory');
+
+        if(newCategory){
+            setCategories(data=>[...data,newCategory]);
+        };
+
+        handleClose();
+    }
+
 
     return (
         <Box>
@@ -42,21 +51,8 @@ export default function FormDialog() {
             </Box>
             <Dialog
                 open={open}
-                onClose={handleClose}
-                slotProps={{
-                    paper: {
-                        component: 'form',
-                        onSubmit: (event) => {
-                            event.preventDefault();
-                            const formData = new FormData(event.currentTarget);
-                            const formJson = Object.fromEntries(formData.entries());
-                            const email = formJson.email;
-                            console.log(email);
-                            handleClose();
-                        },
-                    },
-                }}
-            >
+                onClose={handleClose}>
+                    <Box component="form" onSubmit={handleSubmit}>
                 <DialogTitle>Add Category</DialogTitle>
                 <DialogContent>
                     <TextField
@@ -74,10 +70,11 @@ export default function FormDialog() {
                     <Button onClick={handleClose} variant="outlined" color="error">Cancel</Button>
                     <Button type="submit" variant="outlined" color="success">ADD</Button>
                 </DialogActions>
+                </Box>
             </Dialog>
 
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', mt: 2 }}>
-                <Link href="/category"><OemCategory /></Link>
+                <Link href="/category"><OemCategory data={categories}/></Link>
                 {/* <OemSelect/> */}
             </Box>
         </Box>
